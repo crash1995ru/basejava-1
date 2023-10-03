@@ -9,51 +9,37 @@ public class ArrayStorage {
     int storageSize = 0;
 
     void clear() {
-        storage = new Resume[10000];
+        for (int i = 0; i < size(); i++) {
+            storage[i] = null;
+        }
         storageSize = 0;
     }
 
     void save(Resume r) {
-        System.arraycopy(storage, 0, storage, 1, size());
-        storage[0] = r;
-        storageSize++;
+        if (!Objects.isNull(r)) {
+            storage[storageSize++] = r;
+        }
     }
 
     Resume get(String uuid) {
-        Resume rsl = new Resume();
-        try {
-            if (!Objects.isNull(uuid)) {
-                for (Resume res : storage) {
-                    if (res.uuid.equals(uuid)) {
-                        rsl = res;
-                        break;
-                    }
+        if (!Objects.isNull(uuid)) {
+            for (int iter = 0; iter < storageSize; iter++) {
+                if (storage[iter].uuid.equals(uuid)) {
+                    return storage[iter];
                 }
             }
-        } catch (NullPointerException NPE) {
-            System.err.println("UUID не найден");
         }
-        return rsl;
+        return null;
     }
 
     void delete(String uuid) {
         for (int i = 0; i < size(); i++) {
             if (storage[i].uuid.equals(uuid)) {
-                move(i);
+                storage[i] = storage[storageSize - 1];
+                storage[storageSize - 1] = null;
                 storageSize--;
                 break;
             }
-        }
-        try {
-            throw new IllegalArgumentException("UUiD не найден");
-        } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
-        }
-    }
-
-    void move(int index) {
-        for (int i = index; i < size() - 1; i++) {
-            storage[i] = storage[i + 1];
         }
     }
 
