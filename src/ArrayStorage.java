@@ -6,7 +6,7 @@ import java.util.Objects;
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    int storageSize = 0;
+    int storageSize;
 
     void clear() {
         for (int i = 0; i < size(); i++) {
@@ -23,9 +23,9 @@ public class ArrayStorage {
 
     Resume get(String uuid) {
         if (!Objects.isNull(uuid)) {
-            for (int iter = 0; iter < storageSize; iter++) {
-                if (storage[iter].uuid.equals(uuid)) {
-                    return storage[iter];
+            for (int i = 0; i < storageSize; i++) {
+                if (storage[i].uuid.equals(uuid)) {
+                    return storage[i];
                 }
             }
         }
@@ -33,7 +33,7 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < storageSize; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 storage[i] = storage[storageSize - 1];
                 storage[storageSize - 1] = null;
