@@ -1,5 +1,5 @@
-import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
+import com.urise.webapp.model.Resume;
 
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
