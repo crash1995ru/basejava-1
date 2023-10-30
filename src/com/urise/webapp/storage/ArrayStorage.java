@@ -9,7 +9,7 @@ import com.urise.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     protected int getIndex(String uuid) {
-        for (int i = 0; i < storageSize; i++) {
+        for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
@@ -18,12 +18,12 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     public void save(Resume r) {
-        if (storageSize == storage.length) {
+        if (size == storage.length) {
             System.err.println("Error: Storage is full");
         }
         int index = getIndex(r.getUuid());
         if (index == -1) {
-            storage[storageSize++] = r;
+            storage[size++] = r;
         } else {
             System.err.println("Error: The value is present in the list " + r.getUuid());
         }

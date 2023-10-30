@@ -9,17 +9,12 @@ import java.util.Objects;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10;
+    protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
-    protected int storageSize = 0;
-
-    protected abstract int getIndex(String uuid);
-
-    public abstract void save(Resume resume);
-
+    protected int size = 0;
 
     public int size() {
-        return storageSize;
+        return size;
     }
 
     public void update(Resume r, String uuid) {
@@ -41,20 +36,20 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume[] getAll() {
-        return Arrays.copyOf(storage, storageSize);
+        return Arrays.copyOf(storage, size);
     }
 
     public void clear() {
         Arrays.fill(storage, null);
-        storageSize = 0;
+        size = 0;
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index != -1) {
-            storage[index] = storage[storageSize - 1];
-            storage[storageSize - 1] = null;
-            storageSize--;
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         } else {
             printErrorMessage(uuid);
         }
@@ -69,12 +64,12 @@ public abstract class AbstractArrayStorage implements Storage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractArrayStorage that = (AbstractArrayStorage) o;
-        return storageSize == that.storageSize && Arrays.equals(storage, that.storage);
+        return size == that.size && Arrays.equals(storage, that.storage);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(storageSize);
+        int result = Objects.hash(size);
         result = 31 * result + Arrays.hashCode(storage);
         return result;
     }
@@ -83,4 +78,10 @@ public abstract class AbstractArrayStorage implements Storage {
     public String toString() {
         return Arrays.toString(storage);
     }
+
+    protected abstract int getIndex(String uuid);
+
+    public void save(Resume resume) {
+    }
 }
+
