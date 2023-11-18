@@ -13,6 +13,10 @@ public abstract class AbstractArrayStorage implements Storage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
+    public void save(Resume resume) {
+
+    }
+
     public int size() {
         return size;
     }
@@ -58,22 +62,6 @@ public abstract class AbstractArrayStorage implements Storage {
     protected void printErrorMessage(String uuid) {
         System.err.printf("Error: %s is not found \n", uuid);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractArrayStorage that = (AbstractArrayStorage) o;
-        return size == that.size && Arrays.equals(storage, that.storage);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(size);
-        result = 31 * result + Arrays.hashCode(storage);
-        return result;
-    }
-
     @Override
     public String toString() {
         return Arrays.toString(storage);
@@ -81,6 +69,5 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract int getIndex(String uuid);
 
-    public abstract void save(Resume resume);
 }
 
