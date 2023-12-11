@@ -16,6 +16,7 @@ public abstract class AbstractArrayStorage implements Storage {
             throw new IllegalArgumentException("Резюме присутствует в хранилище.");
         }
         insertResume(resume, getIndex(resume.getUuid()));
+        size++;
     }
 
     public int size() {
