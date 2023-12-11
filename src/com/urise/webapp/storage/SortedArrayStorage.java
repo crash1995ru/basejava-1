@@ -16,11 +16,14 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     protected int getIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchKey.getUuid());
+        return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
     @Override
     protected void removeResume(int index) {
-        System.arraycopy(storage, -index - 1, storage, -index - 2, size - index - 2);
+        int indexInsert = size - index - 1;
+        if (indexInsert > 0) {
+            System.arraycopy(storage, index + 1, storage, index, indexInsert);
+        }
     }
 }

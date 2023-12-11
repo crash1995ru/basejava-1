@@ -19,6 +19,17 @@ public abstract class AbstractArrayStorage implements Storage {
         size++;
     }
 
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            throw new IllegalArgumentException("UUID не найден");
+        } else {
+            removeResume(index);
+            size--;
+        }
+    }
+
+
     public int size() {
         return size;
     }
@@ -34,7 +45,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Resume " + uuid + " not exist");
             return null;
         }
@@ -48,18 +59,6 @@ public abstract class AbstractArrayStorage implements Storage {
     public void clear() {
         Arrays.fill(storage, null);
         size = 0;
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new IllegalArgumentException("UUID не найден");
-        } else {
-            removeResume(index);
-            storage[size] = null;
-            size--;
-        }
-
     }
 
     protected void printErrorMessage(String uuid) {
