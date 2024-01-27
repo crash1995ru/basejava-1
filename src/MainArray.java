@@ -1,5 +1,7 @@
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.SortedArrayStorage;
 
 import java.io.BufferedReader;
@@ -13,7 +15,7 @@ import java.io.InputStreamReader;
 public class MainArray {
     private final static SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ExistStorageException, StorageException, NotExistStorageException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
@@ -47,7 +49,7 @@ public class MainArray {
                 case "update":
                     r = new Resume();
                     r.setUuid(uuid);
-                    ARRAY_STORAGE.update(r, newUuid);
+                    ARRAY_STORAGE.update(r);
                     printAll();
                     break;
                 case "delete":
