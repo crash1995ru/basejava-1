@@ -23,7 +23,7 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume resume3 = new Resume(UUID_3);
     private static final Resume resume4 = new Resume(UUID_4);
 
-    private Storage storage;
+    private final Storage storage;
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
@@ -77,9 +77,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void get() throws NotExistStorageException {
-        Resume expected = resume3;
         Resume actual = storage.get(UUID_3);
-        Assert.assertSame(expected, actual);
+        Assert.assertSame(resume3, actual);
     }
 
     @Test
