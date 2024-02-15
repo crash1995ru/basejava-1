@@ -1,33 +1,24 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public final void save(Resume resume) throws StorageException, ExistStorageException {
-        int index = getIndex(resume.getUuid());
+    public final void doSave(Resume resume, int searchKe) throws StorageException {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Хранилище переполненно");
-        } else if (index >= 0) {
-            throw new ExistStorageException("Резюме присутствует в хранилище.");
         }
-        insertResume(resume, index);
+        insertResume(resume, searchKe);
         size++;
     }
 
-    public final void delete(String uuid) throws NotExistStorageException {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException("UUID не найден");
-        }
+    public void doRemove(String uuid, int index) {
         removeResume(index);
         storage[size] = null;
         size--;
@@ -37,20 +28,12 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
-    public final void update(Resume resume) throws NotExistStorageException {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException("Resume not exist");
-        }
-        storage[index] = resume;
+    public final void doUpdate(Resume resume, int searchKey) {
+        storage[searchKey] = resume;
     }
 
-    public final Resume get(String uuid) throws NotExistStorageException {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException("Resume not exist");
-        }
-        return storage[index];
+    public final Resume doGet(int searchKey) {
+        return storage[searchKey];
     }
 
     public final Resume[] getAll() {
@@ -62,15 +45,21 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
+    public final int getSearchKey(String uuid) {
+        return getIndex(uuid);
+    }
+
+
     @Override
     public String toString() {
         return Arrays.toString(storage);
     }
 
-    protected abstract int getIndex(String uuid);
-
     protected abstract void insertResume(Resume resume, int index);
 
     protected abstract void removeResume(int index);
+
+    protected abstract int getIndex(String uuid);
+
 
 }
