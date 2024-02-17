@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class SortedArrayStorageTest extends AbstractArrayStorageTest {
+public class SortedArrayStorageTest extends ArrayStorageTest {
 
     public SortedArrayStorageTest(){
         super(new SortedArrayStorage());
