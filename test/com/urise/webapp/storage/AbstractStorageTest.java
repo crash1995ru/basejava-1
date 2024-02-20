@@ -8,9 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-class AbstractStorageTest {
+public class AbstractStorageTest {
     private static final int INITIAL_SIZE = 3;
     private static final String UUID_1 = "uuid_1";
     private static final String UUID_2 = "uuid_2";
@@ -23,9 +22,10 @@ class AbstractStorageTest {
 
     private final Storage storage;
 
-    public AbstractStorageTest(Storage storage) {
+    public AbstractStorageTest (Storage storage) {
         this.storage = storage;
     }
+
 
     @Before
     public void setUp() throws ExistStorageException, StorageException {
@@ -76,7 +76,7 @@ class AbstractStorageTest {
     @Test
     public void get() throws NotExistStorageException {
         Resume actual = storage.get(UUID_3);
-        Assert.assertSame(resume3  , actual);
+        Assert.assertSame(resume3, actual);
     }
 
     @Test
